@@ -8,18 +8,19 @@ public class Music {
     private int numberOfStream = 0;
     private static ArrayList<Music> allMusic = new ArrayList<Music>();
 
-    public Music(String title) {
+    public Music(String title, User singer) {
         this.title = title;
+        this.singer = singer;
         allMusic.add(this);
     }
 
     public void play() {
+        numberOfStream++;
         System.out.println("Playing " + title + " singer " + singer + " stream "
                 + numberOfStream);
-        numberOfStream++;
     }
 
-    public ArrayList<Music> search(String title) {
+    public static ArrayList<Music> search(String title) {
         ArrayList<Music> musicList = new ArrayList<Music>();
         for (Music music : allMusic) {
             if (music.title.equals(title)) {
@@ -32,7 +33,7 @@ public class Music {
             return musicList;
     }
 
-    public ArrayList<Music> search(String title, User singer) {
+    public static ArrayList<Music> search(String title, User singer) {
         ArrayList<Music> musicList = new ArrayList<Music>();
         for (Music music : allMusic) {
             if (music.title.equals(title) && music.singer.getUsername().equals(singer.getUsername())) {
@@ -43,6 +44,11 @@ public class Music {
             return null;
         else
             return musicList;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("title: %s-singer: %s", this.title, this.singer.getUsername());
     }
 
     public String getTitle() {
