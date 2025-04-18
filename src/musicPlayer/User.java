@@ -1,6 +1,7 @@
 package musicPlayer;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class User {
     private String username;
@@ -13,11 +14,13 @@ public class User {
 
     public User(String username, String password) {
         // validation
-        for (User usr : allUser)
-            if (usr.getUsername().equals(username))
-                throw new InvalidOperationException("Username is already in use!");
-        if (password.length() < 8)
-            throw new InvalidOperationException("Password must be at least 8 characters!");
+        if (!Objects.isNull(allUser)) {
+            for (User usr : allUser)
+                if (usr.getUsername().equals(username))
+                    throw new InvalidOperationException("Username is already in use!");
+            if (password.length() < 8)
+                throw new InvalidOperationException("Password must be at least 8 characters!");
+        }
 
         this.username = username;
         this.password = password;
@@ -26,6 +29,11 @@ public class User {
         followingList = new ArrayList<>();
         playlists = new ArrayList<>();
         allUser = new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return this.getUsername();
     }
 
     public String getUsername() {
